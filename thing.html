@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EToH Name Generator</title>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --bg: #111827;
+      --text: #f9fafb;
+      --button-bg: #2563eb;
+      --button-hover: #1d4ed8;
+      --input-bg: #1f2937;
+    }body.light {
+  --bg: #f9fafb;
+  --text: #111827;
+  --button-bg: #3b82f6;
+  --button-hover: #2563eb;
+  --input-bg: #d1d5db;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  user-select: none;
+}
+
+h1, h2 {
+  font-size: 1.75rem;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.container, .info, .credits {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+input, select, button, textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--input-bg);
+  color: var(--text);
+}
+
+button {
+  background-color: var(--button-bg);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}
+
+textarea {
+  resize: vertical;
+  height: 150px;
+  overflow-y: scroll;
+  user-select: text;
+}
+
+.toggle-mode {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: var(--button-bg);
+  border: none;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-mode:hover {
+  background-color: var(--button-hover);
+}
+
+.toggle-mode svg {
+  width: 24px;
+  height: 24px;
+  stroke: white;
+}
+
+.info p, .credits p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.info a, .credits a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.info a:hover, .credits a:hover {
+  text-decoration: underline;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg);
+  color: var(--text);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 999;
+  display: none;
+  max-width: 90%;
+  text-align: center;
+}
+.modal button {
+  margin-top: 15px;
+}
+
+  </style>
+</head>
+<body>
+  <button class="toggle-mode" id="modeToggle" onclick="toggleMode()">
+    <i data-lucide="moon" id="modeIcon"></i>
+  </button>  <h1>EToH Name Generator</h1>
+  <div class="container">
+    <div>
+      <label for="amount">How many names to generate:</label>
+      <input type="number" id="amount" min="1" max="100" value="5">
+    </div><div>
+  <label for="towerType">Choose tower types:</label>
+  <select id="towerType">
+    <option value="To">To</option>
+    <option value="Co">Co</option>
+    <option value="Oo">Oo</option>
+    <option value="So">So</option>
+    <option value="mixed">Randomized</option>
+  </select>
+</div>
+
+<div>
+  <label for="nameLength">How long should each name be (max 5):</label>
+  <select id="nameLength">
+    <option value="random">Randomized</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+</div>
+
+<button onclick="generateNames()">Generate</button>
+
+<div>
+  <label for="output">Generated Names:</label>
+  <textarea id="output" readonly></textarea>
+  <button onclick="copyOutput()">Copy</button>
+  <button onclick="saveToFile()">Save as .txt</button>
+</div>
+
+  </div>  <h2>Info</h2>
+  <div class="info">
+    <p>
+      EToH name generator is a website created by <a href="https://www.tiktok.com/@zundachiikawa" target="_blank">Zundachiikawa</a> and <a href="https://www.tiktok.com/@bloomsiree" target="_blank">Bloomsiree</a> as of June 24-25, 2025. A few days before this I was just a newbie EToH player (back in my days it was JToH) and I have joined one of my friends who play EToH like a master, and he was talking to his friend saying something along the lines of: "what's you hardest", "mine is ToHD" and stuff like that. I was confused but never bothered to interrupt them. To this day I still don't understand them so I made this website to help troll me >:3
+    </p>
+  </div>  <h2>Credits</h2>
+  <div class="credits">
+    <p>Website creator: <a href="https://www.tiktok.com/@zundachiikawa" target="_blank">@zundachiikawa</a></p>
+    <p>His sister: <a href="https://www.tiktok.com/@bloomsiree" target="_blank">@bloomsiree</a></p>
+    <p>EToH creator: Eternal??</p>
+  </div>  <div id="easterModal" class="modal">
+    <h2>🥚 Forbidden Tower Discovered!</h2>
+    <p>Nice. You’ve unlocked the forbidden tower of memes.</p>
+    <button onclick="document.getElementById('easterModal').style.display='none'">Close</button>
+  </div>  <script>
+    lucide.createIcons();
+
+    function generateNames() {
+      const amount = parseInt(document.getElementById('amount').value);
+      const towerType = document.getElementById('towerType').value;
+      const nameLengthSetting = document.getElementById('nameLength').value;
+
+      const prefixes = ["To", "Co", "Oo", "So"];
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+      function getRandomLetters(length) {
+        let result = "";
+        for (let i = 0; i < length; i++) {
+          result += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        }
+        return result;
+      }
+
+      const results = [];
+
+      for (let i = 0; i < amount; i++) {
+        const length = nameLengthSetting === "random" ? Math.floor(Math.random() * 5) + 1 : parseInt(nameLengthSetting);
+        const prefix = towerType === "mixed" ? prefixes[Math.floor(Math.random() * prefixes.length)] : towerType;
+        results.push(prefix + getRandomLetters(length));
+      }
+
+      document.getElementById('output').value = results.join("\n");
+
+      if (amount === 69 || amount === 420) {
+        document.getElementById('easterModal').style.display = 'block';
+      }
+    }
+
+    function copyOutput() {
+      const text = document.getElementById('output');
+      text.select();
+      text.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(text.value);
+    }
+
+    function saveToFile() {
+      const text = document.getElementById('output').value;
+      const blob = new Blob([text], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "etoh-names.txt";
+      a.click();
+    }
+
+    function toggleMode() {
+      const body = document.body;
+      const icon = document.getElementById('modeIcon');
+      body.classList.toggle('light');
+
+      if (body.classList.contains('light')) {
+        icon.setAttribute('data-lucide', 'sun');
+      } else {
+        icon.setAttribute('data-lucide', 'moon');
+      }
+      lucide.createIcons();
+    }
+  </script></body>
+</html>
